@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./client
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+  backend:
+    build: ./server
+    environment:
+      MONGO_URL: mongodb://db:27017/todo
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - todo:/data/db
+volumes:
+  todo:
